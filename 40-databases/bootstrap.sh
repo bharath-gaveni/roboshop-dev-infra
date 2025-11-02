@@ -1,4 +1,5 @@
+#!bin/bash
 
-
-# dnf install ansible -y
-# ansible-pull -U https://github.com/bharath-gaveni/ansible-roboshop-roles.git -e component=mongodb main site.yml
+component=$1
+dnf install ansible -y
+ansible-pull -U https://github.com/bharath-gaveni/ansible-roboshop-roles.git -e component=$component main.yaml
