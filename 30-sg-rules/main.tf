@@ -23,7 +23,7 @@ resource "aws_security_group_rule" "mongodb_bastion" {
   type              = "ingress"
   security_group_id = local.mongodb_sg_id #which SG we are applying
   source_security_group_id = local.bastion_sg_id # Attaching security from source
-  from_port         = 27017
-  to_port           = 27017
+  from_port         = 22
+  to_port           = 22
   protocol          = "tcp" # allowing port no 27017
 }
