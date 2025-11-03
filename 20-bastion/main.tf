@@ -18,5 +18,5 @@ resource "aws_instance" "bastion" {
 #Create Instance Profile (bridge between EC2 and IAM role)
 resource "aws_iam_instance_profile" "bastion" {
   name = "bastion"
-  role = BastionTerraformAdmin
+  role = "BastionTerraformAdmin"
 }
