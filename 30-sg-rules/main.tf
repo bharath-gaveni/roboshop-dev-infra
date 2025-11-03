@@ -27,3 +27,34 @@ resource "aws_security_group_rule" "mongodb_bastion" {
   to_port           = 22
   protocol          = "tcp" # allowing port no 27017
 }
+
+#redis SG accepting traffic from bastion
+resource "aws_security_group_rule" "redis_bastion" {
+  type              = "ingress"
+  security_group_id = local.redis_sg_id #which SG we are applying
+  source_security_group_id = local.bastion_sg_id # Attaching security from source
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp" # allowing port no 27017
+}
+
+
+#rabbitmq SG accepting traffic from bastion
+resource "aws_security_group_rule" "rabbitmq_bastion" {
+  type              = "ingress"
+  security_group_id = local.rabbitmq_sg_id #which SG we are applying
+  source_security_group_id = local.bastion_sg_id # Attaching security from source
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp" # allowing port no 27017
+}
+
+#mysql SG accepting traffic from bastion
+resource "aws_security_group_rule" "mysql_bastion" {
+  type              = "ingress"
+  security_group_id = local.mysql_sg_id #which SG we are applying
+  source_security_group_id = local.bastion_sg_id # Attaching security from source
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp" # allowing port no 27017
+}

@@ -30,7 +30,7 @@ resource "terraform_data" "mongodb" {
   provisioner "remote-exec" {
     inline = [ 
         "chmod +x /tmp/bootstrap.sh",
-        "sudo sh /tmp/bootstrap.sh mongodb"
+        "sudo sh /tmp/bootstrap.sh mongodb dev"
 
      ]
   }
@@ -70,7 +70,7 @@ resource "terraform_data" "redis" {
   provisioner "remote-exec" {
     inline = [ 
         "chmod +x /tmp/bootstrap.sh",
-        "sudo sh /tmp/bootstrap.sh redis"
+        "sudo sh /tmp/bootstrap.sh redis dev"
 
      ]
   }
@@ -109,7 +109,7 @@ resource "terraform_data" "rabbitmq" {
   provisioner "remote-exec" {
     inline = [ 
         "chmod +x /tmp/bootstrap.sh",
-        "sudo sh /tmp/bootstrap.sh rabbitmq"
+        "sudo sh /tmp/bootstrap.sh rabbitmq dev"
 
      ]
   }
@@ -121,6 +121,7 @@ resource "aws_instance" "mysql" {
   instance_type = "t3.micro"
   vpc_security_group_ids = [local.mysql_sg_id]
   subnet_id = local.database_subnet_id
+  iam_instance_profile = aws_iam_instance_profile.mysql.name
   tags = merge(
         local.common_tags,
         {
@@ -148,8 +149,14 @@ resource "terraform_data" "mysql" {
   provisioner "remote-exec" {
     inline = [ 
         "chmod +x /tmp/bootstrap.sh",
-        "sudo sh /tmp/bootstrap.sh mysql"
+        "sudo sh /tmp/bootstrap.sh mysql dev"
 
      ]
   }
+}
+
+#Create Instance Profile (bridge between EC2 and IAM role)
+resource "aws_iam_instance_profile" "mysql" {
+  name = "mysql"
+  role = EC2SSMParameterRead
 }
